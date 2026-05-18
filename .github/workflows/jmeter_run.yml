@@ -1,0 +1,25 @@
+name: JMeter Performance Test
+on: [push]
+jobs:
+  performance_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup JMeter
+        run: |
+          sudo apt-get update
+          sudo apt install jmeter -y
+
+      - name: Run JMeter Test
+        # This command runs the test AND generates the HTML dashboard folder
+        run: |
+          jmeter -n -t *.jmx -l results.jtl -e -o dashboard_report
+
+      - name: Upload Results
+        # This uploads the entire folder so you get the index.html file
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-dashboard-report
+          path: dashboard_report/
