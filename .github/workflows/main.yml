@@ -13,8 +13,8 @@ jobs:
           sudo apt install jmeter -y
 
       - name: Run JMeter Test
-        # The quotes and the wildcard *.jmx will force it to work
-        run: jmeter -n -t "*.jmx" -l results.jtl
+        # Using *.jmx to handle the space in "Load Test.jmx"
+        run: jmeter -n -t *.jmx -l results.jtl
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
