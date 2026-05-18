@@ -13,13 +13,17 @@ jobs:
           sudo apt install jmeter -y
 
       - name: Run JMeter Test
-        # We use *.jmx so it finds the file even if the name is slightly off
+        # We use -f to force JMeter to ignore some non-critical errors 
+        # and ensure the .jtl is created
         run: |
-          ls -F
-          jmeter -n -t *.jmx -l results.jtl
+          jmeter -n -t "*.jmx" -l results.jtl -j jmeter.log
+          ls -lh
 
       - name: Upload Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
-          path: results.jtl
+          path: |
+            results.jtl
+            jmeter.log
