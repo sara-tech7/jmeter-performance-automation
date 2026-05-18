@@ -13,7 +13,7 @@ jobs:
           sudo apt install jmeter -y
 
       - name: Run JMeter Test
-        # Using *.jmx to handle the space in "Load Test.jmx"
+        # This wildcard handles the space in "Load Test.jmx" and finds the CSV automatically
         run: jmeter -n -t *.jmx -l results.jtl
 
       - name: Upload Results
