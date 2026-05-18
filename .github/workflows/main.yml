@@ -13,14 +13,11 @@ jobs:
           sudo apt install jmeter -y
 
       - name: Run JMeter Test
-        # This will find your file even with spaces or weird naming
-        run: |
-          ls -R
-          jmeter -n -t *.jmx -l results.jtl
+        # The quotes and the wildcard *.jmx will force it to work
+        run: jmeter -n -t "*.jmx" -l results.jtl
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
           path: results.jtl
-          if-no-files-found: error
